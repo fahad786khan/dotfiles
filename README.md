@@ -32,3 +32,7 @@ then use GNU stow to create symlinks
 ```
 $ stow .
 ```
+
+i have to add
+- .vscode
+- .nvim or vimrc
