@@ -100,17 +100,9 @@ source $ZSH/oh-my-zsh.sh
 # the $ZSH_CUSTOM folder, with .zsh extension. Examples:
 # - $ZSH_CUSTOM/aliases.zsh
 # - $ZSH_CUSTOM/macos.zsh
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-alias ls='ls --color'
-alias vim='nvim'
-alias  vi='nvim'
-alias c='clear'
-alias ll='ls -la'
-alias lg='lazygit'
+
+[ -f ~/.aliases ] && source ~/.aliases
+
 # others
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
@@ -131,3 +123,43 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 #disables the automatic correction and loading of certain completion scripts that are not found
 ZSH_DISABLE_COMPFIX=true
+
+# Github  autho
+# eval "$(ssh-agent -s)"
+# ssh-add ~.ssh/id_ed25519
+
+#Auto-launching ssh-agent
+env=~/.ssh/agent.env
+
+agent_load_env () { test -f "$env" && . "$env" >| /dev/null ; }
+
+agent_start () {
+    (umask 077; ssh-agent >| "$env")
+    . "$env" >| /dev/null ; }
+
+agent_load_env
+
+# agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2=agent not running
+agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
+
+if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
+    agent_start
+    ssh-add
+elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
+    ssh-add
+fi
+
+unset env
+
+[ -f ~/.functions ] && source ~/.functions
+
+
+# used for starship
+eval "$(starship init zsh)"
+
+# keybinds
+export PATH="$HOME/.cargo/bin":PATH
+export PATH=$PATH:/usr/bin
+export EDITOR=nvim
+export PATH="$HOME/.cargo/bin:$PATH"
+export BROWSER="/mnt/c/Windows/System32/cmd.exe /c start"
