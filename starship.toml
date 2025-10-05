@@ -1,0 +1,51 @@
+# ~/.config/starship.toml
+# Catppuccin Mocha theme for Starship
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$nodejs\
+$rust\
+$python\
+$package\
+$cmd_duration\
+$character"""
+
+# Prompt symbols
+[character]
+success_symbol  = "[❯](bold #a6e3a1)"
+error_symbol      = "[❯](bold #f38ba8)"
+vimcmd_symbol = "[❮](bold #89b4fa)"
+
+[directory]
+style = "bold #89b4fa"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = " "
+style = "bold #cba6f7"
+
+[git_status]
+style = "bold #f38ba8"
+
+[nodejs]
+symbol = " "
+style = "bold #a6e3a1"
+
+[rust]
+symbol = " "
+style = "bold #fab387"
+
+[python]
+symbol = " "
+style = "bold #f9e2af"
+
+[package]
+symbol = "󰏗 "
+style = "bold #f5c2e7"
+
+[cmd_duration]
+min_time = 2000
+format = " took [$duration](bold #f9e2af)"
