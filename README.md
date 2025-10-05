@@ -33,6 +33,10 @@ then use GNU stow to create symlinks
 $ stow .
 ```
 
+then run
+```bash
+bash install.sh
+```
 i have to add
 - .vscode
 - .nvim or vimrc
